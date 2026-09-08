@@ -178,22 +178,31 @@ export const project32Phases: Project32Phase[] = [
         evidence: "Current parser converts dynamic VAs to file offsets",
       },
       {
-        id: "C3b",
-        label: "Inspect target veneer",
-        status: "BLOCKED",
-        evidence: "Built, but not installed or executed; waiting for device reconnect",
+        id: "C4.1",
+        label: "Decode live veneer and GOT slot",
+        status: "COMPLETE",
+        evidence:
+          "GOT slot 0x40f51b74 = raw 0x000485bc; rebased target 0x400485bc",
       },
       {
-        id: "C4",
-        label: "Classify raw-pointer source",
-        status: "PENDING",
-        evidence: "Depends on C3b veneer words",
+        id: "C4.2",
+        label: "Attribute raw fetch to the true guest invocation",
+        status: "COMPLETE",
+        evidence:
+          "nativeResume healthy via P32_STOP (PC=0xdead01c0, status=0); nativeRender owns raw fetch (guest-fetch-fault phase=nativeRender, addr=0x000485bc, lr=0x4046a704)",
+      },
+      {
+        id: "C4.3",
+        label: "Classify slot 0x40f51b74 ownership",
+        status: "COMPLETE",
+        evidence:
+          "libunity.so DT_JMPREL R_ARM_JUMP_SLOT 'syscall' unresolved; slot runtime-written to 0x000485bc (runtime-written-slot-or-other-source)",
       },
       {
         id: "C5",
-        label: "Repair verified relocation/veneer defect",
-        status: "PENDING",
-        evidence: "Only after C3b/C4 evidence",
+        label: "Apply narrow slot-scoped repair",
+        status: "ACTIVE",
+        evidence: "In progress",
       },
       {
         id: "C6",

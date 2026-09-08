@@ -19,8 +19,8 @@
     "title": "Project32Droid",
     "tagline": "A 32-bit Android compatibility and emulation experiment.",
     "status": "active",
-    "progress": 41,
-    "next": "C3b · Inspect target veneer after device reconnect.",
+    "progress": 45,
+    "next": "C5 · Apply narrow slot-scoped repair.",
     "tags": [
       "Kotlin",
       "C++",
