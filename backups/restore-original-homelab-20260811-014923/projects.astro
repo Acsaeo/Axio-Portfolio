@@ -1,0 +1,104 @@
+---
+import { readFileSync } from "node:fs";
+
+const base = "/portfolio/";
+
+function readJson(filename: string) {
+  try {
+    return JSON.parse(
+      readFileSync(
+        new URL(`../../public/data/${filename}`, import.meta.url),
+        "utf8"
+      )
+    );
+  } catch {
+    return [];
+  }
+}
+
+const projectStatus = readJson("project-status.json");
+const githubProjects = readJson("github-projects.json");
+---
+
+<section id="projects" class="mx-auto max-w-6xl px-6 py-24 md:px-10">
+  <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">BUILD LOG</p>
+      <h2 class="mt-3 text-4xl font-medium md:text-6xl">Active Projects</h2>
+    </div>
+    <p class="max-w-md text-[var(--white-icon)]">
+      Open a project to view its current status, capabilities, and next milestone.
+    </p>
+  </div>
+
+  <div class="mt-12 grid gap-4 md:grid-cols-2">
+    {
+      projectStatus.map((project: any) => (
+        <a
+          href={`${base}project/${encodeURIComponent(project.id)}/`}
+          class="block rounded-2xl border border-[var(--line)] bg-black p-5 transition hover:-translate-y-1 hover:border-[var(--sec)]"
+          aria-label={`Open ${project.title} project documentation`}
+          style={`view-transition-name:project-${project.id}`}
+        >
+          <p class="text-xs uppercase text-[var(--sec)]">{project.status}</p>
+          <h3 class="mt-2 text-2xl">{project.title}</h3>
+          <p class="mt-3 text-[var(--white-icon)]">{project.tagline}</p>
+
+          <div
+            class="mt-6 h-1 overflow-hidden rounded-full bg-[#ffffff12]"
+            role="progressbar"
+            aria-label={`${project.title} progress`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={project.progress}
+          >
+            <div
+              class="h-full bg-[var(--sec)]"
+              style={`width:${Math.max(0, Math.min(100, Number(project.progress) || 0))}%`}
+            />
+          </div>
+
+          <p class="mt-2 text-sm">
+            {project.progress}% · {project.next}
+          </p>
+          <p class="mt-5 text-xs text-[var(--sec)]">Open project notes ↗</p>
+        </a>
+      ))
+    }
+
+    <a
+      href={`${base}lab/`}
+      class="block rounded-2xl border border-[var(--line)] bg-black p-5 transition hover:-translate-y-1 hover:border-[var(--sec)]"
+      style="view-transition-name:project-ax-homelab"
+      aria-label="Open Ax-Homelab"
+    >
+      <p class="text-xs uppercase text-[var(--sec)]">LIVE ENVIRONMENT</p>
+      <h3 class="mt-2 text-2xl">Ax-Homelab</h3>
+      <p class="mt-3 text-[var(--white-icon)]">
+        Services, automations, infrastructure, and current homelab milestones.
+      </p>
+      <p class="mt-5 text-xs text-[var(--sec)]">Open homelab status ↗</p>
+    </a>
+  </div>
+
+  <div class="mt-20">
+    <p class="text-xs tracking-[.2em] text-[var(--sec)]">PUBLIC REPOSITORIES</p>
+    <h2 class="mt-3 text-3xl font-medium md:text-5xl">GitHub Projects</h2>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        githubProjects.map((repo: any) => (
+          <a
+            class="rounded-2xl border border-[var(--line)] p-5 transition hover:-translate-y-1 hover:border-[var(--sec)]"
+            href={`${base}github/?repo=${encodeURIComponent(repo.fullName)}`}
+            aria-label={`Open ${repo.name} project preview`}
+          >
+            <p class="text-sm text-[var(--sec)]">{repo.language || "PROJECT"}</p>
+            <h3 class="mt-2 text-xl">{repo.name} ↗</h3>
+            <p class="mt-3 text-[var(--white-icon)]">{repo.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

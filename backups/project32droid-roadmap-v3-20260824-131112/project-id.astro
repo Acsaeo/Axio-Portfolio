@@ -1,0 +1,337 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { projectDocs } from "@/data/projectDocs";
+
+export function getStaticPaths() {
+  return Object.entries(projectDocs).map(([id, doc]) => ({
+    params: { id },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const transitionName = `project-${Astro.params.id}`;
+---
+
+<Layout title={doc.title}>
+  <main class="min-h-screen max-w-5xl mx-auto py-28">
+    <a
+      href="/portfolio/#projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] hover:text-[var(--white)] transition"
+     data-project-back>
+      ← Back to projects
+    </a>
+
+    <section
+      class="mt-12 rounded-3xl border border-[var(--line)] bg-black p-7 md:p-12"
+      style={`view-transition-name:${transitionName}`}
+    >
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+        {doc.eyebrow}
+      </p>
+
+      <div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div>
+          <h1 class="text-5xl md:text-7xl font-medium leading-none">
+            {doc.title}
+          </h1>
+
+          <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+            {doc.intro}
+          </p>
+        </div>
+
+        <div class="min-w-[180px]">
+          <div class="flex justify-between text-sm">
+            <span class="text-[var(--white-icon)]">{doc.status}</span>
+            <span class="text-[var(--sec)]">{doc.progress}%</span>
+          </div>
+
+          <div
+            class="mt-2 h-2 overflow-hidden rounded-full bg-[#ffffff12]"
+            role="progressbar"
+            aria-label={`${doc.title} progress`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={doc.progress}
+          >
+            <div
+              class="h-full bg-[var(--sec)] shadow-[0_0_12px_#ff8a18]"
+              style={`width:${doc.progress}%`}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 border-t border-[var(--line)] pt-9">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">ACHIEVED</p>
+
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {
+            doc.capabilities.map((capability) => (
+              <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4 text-[var(--white-icon)]">
+                <span class="mr-2 text-[var(--sec)]">✓</span>
+                {capability}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {
+        doc.progress < 100 && (
+          <div class="mt-10 rounded-2xl border border-[#ff8a183d] bg-[#ff8a180d] p-5">
+            <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+              NEXT MILESTONE
+            </p>
+
+            
+{
+  Astro.params.id === "project32droid" ? (
+    <div class="mt-6 space-y-6" data-project32-roadmap>
+      <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+        <div class="border-b border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,138,24,.15),transparent_55%)] px-5 py-5">
+          <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+                PROJECT32DROID ROADMAP
+              </p>
+              <h2 class="mt-2 text-2xl text-[var(--white)] md:text-3xl">
+                Rootless ARM32 runtime
+              </h2>
+              <p class="mt-2 text-sm text-[var(--white-icon)]">
+                armeabi-v7a guest runtime on arm64-v8a Android
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-[var(--sec)] bg-[var(--sec)] px-3 py-1 text-black">
+                Phase A complete
+              </span>
+              <span class="rounded-full border border-[var(--sec)] px-3 py-1 text-[var(--sec)]">
+                Phase B active
+              </span>
+              <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--coral)]">
+                Constructor path blocked
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-px bg-[var(--line)] md:grid-cols-2">
+          <div class="bg-black p-5">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+              CURRENT MILESTONE
+            </p>
+            <p class="mt-3 font-mono text-sm text-[var(--white)]">
+              B0.3 · Executed instruction-history trace
+            </p>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+              Record a bounded history of executed guest instructions before the UDF to identify the real branch condition.
+            </p>
+          </div>
+
+          <div class="bg-black p-5">
+            <p class="text-xs tracking-[.16em] text-[var(--coral)]">
+              CURRENT BLOCKER
+            </p>
+            <p class="mt-3 font-mono text-sm text-[var(--white)]">
+              Unity UDF at 0x4020e034
+            </p>
+            <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+              Occurs during <span class="font-mono text-[var(--white)]">nativeRecreateGfxState</span>.
+            </p>
+          </div>
+        </div>
+
+        <div class="border-t border-[var(--line)] bg-black p-5">
+          <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+            VERIFIED DISPATCH PATH
+          </p>
+          <p class="mt-3 break-words font-mono text-xs leading-6 text-[var(--white-icon)] md:text-sm">
+            0x4050c918
+            <span class="px-1 text-[var(--sec)]">→</span>
+            0x40048924
+            <span class="px-1 text-[var(--sec)]">→</span>
+            GOT 0x40f51778
+            <span class="px-1 text-[var(--sec)]">→</span>
+            internal Unity function 0x4020df7c
+            <span class="px-1 text-[var(--coral)]">→</span>
+            UDF 0x4020e034
+          </p>
+        </div>
+
+        <div class="border-t border-[var(--line)] bg-[#ff4d1808] p-5">
+          <p class="text-xs tracking-[.16em] text-[var(--coral)]">
+            CURRENT POLICY
+          </p>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+              No UDF patching
+            </span>
+            <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+              No constructor execution
+            </span>
+            <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+              No generic import batches
+            </span>
+            <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+              No host pointers in guest memory
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+                PHASE A · ✅ COMPLETE
+              </p>
+              <p class="mt-1 text-lg text-[var(--white)]">
+                Guest ELF Loader Foundation
+              </p>
+            </div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+            <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A1 · Guest-code integrity gate <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Disable broad destructive Unity code patching. Preserve invalid-instruction evidence.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A2 · Import and relocation boundary <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Refuse host-pointer fallback. Log unresolved imports with guest relocation slots.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A3 · Dependency-first linker transaction <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Map → publish → load DT_NEEDED closure → relocate once.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A4 · PT_LOAD-aware ELF addressing <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Translate dynamic ELF virtual addresses to source-file offsets.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A5 · Relocation and dynamic-symbol validation <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Validate REL/JMPREL ranges, DT_HASH symbol count, string-table bounds, symbol names, and unsupported relocations.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A6 · Constructor metadata validation <span class="text-[var(--sec)]">✅</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Parse and validate DT_INIT, DT_INIT_ARRAY, DT_INIT_ARRAYSZ, and guest-memory ranges.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">A7 · Relocated constructor target inspection <span class="text-[var(--sec)]">✅</span></p><div class="mt-2 rounded-xl border border-[var(--line)] bg-black p-3 font-mono text-xs leading-6 text-[var(--white-icon)]"><p>libmain.so: 1 null</p><p>libmono.so: 1 null</p><p>libunity.so: 301 total, 300 local executable, 1 null</p></div></div>
+          </div>
+        </details>
+
+        <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+                PHASE B · 🔬 ACTIVE
+              </p>
+              <p class="mt-1 text-lg text-[var(--white)]">
+                Runtime Provenance and Safe Initialization
+              </p>
+            </div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+            <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+            <div class="bg-[#ff8a1808] p-4"><p class="font-mono text-sm text-[var(--white)]">B0 · Runtime blocker provenance <span class="text-[var(--sec)]">🔬</span></p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B0.1 · First invalid guest instruction <span class="text-[var(--sec)]">✅</span></p><div class="mt-2 rounded-xl border border-[var(--line)] bg-black p-3 font-mono text-xs leading-6 text-[var(--white-icon)]"><p>phase: nativeRecreateGfxState</p><p>PC: 0x4020e034</p><p>instruction: 0xe7ffdefe</p><p>result: UC_ERR_INSN_INVALID</p></div></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B0.2 · Caller, PLT veneer, and GOT provenance <span class="text-[var(--sec)]">✅</span></p><p class="mt-2 text-sm text-[var(--white-icon)]">nativeRecreateGfxState → ARM BL caller at 0x4050c918 → veneer at 0x40048924 → GOT slot 0x40f51778 → internal Unity target 0x4020df7c → UDF at 0x4020e034</p></div>
+            <div class="border-l-2 border-[var(--sec)] bg-[#ff8a180d] p-4"><p class="font-mono text-sm text-[var(--white)]">B0.3 · Executed instruction-history trace <span class="text-[var(--sec)]">🔬 NEXT</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Record the last bounded set of actually executed guest instructions before the UDF. Goal: identify the real branch condition leading to it.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B0.4 · UDF semantic classification <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Classify assertion/fatal path, unsupported platform state, missing guest ABI behavior, invalid JNI/EGL/graphics setup, or unsupported CPU/feature path.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B0.5 · First evidence-backed runtime dependency <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Select exactly one missing behavior to implement. No generic import batches.</p></div>
+            <div class="bg-[#ff4d1808] p-4"><p class="font-mono text-sm text-[var(--white)]">B1 · Controlled constructor execution <span class="text-[var(--coral)]">⚠ BLOCKED</span></p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B1.1 · Constructor runner infrastructure <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Controlled guest-call runner with ARM/Thumb handling, stop thunk, timeout, register snapshots, and return checks.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B1.2 · Execute one validated constructor <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Run one selected non-null Unity constructor only.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B1.3 · Constructor return/fault classification <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Distinguish normal return, guest UDF, bad branch, memory fault, timeout, and unsupported import.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B1.4 · Constructor dependency order <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">Execute constructors in valid dependency order with proof-driven ordering rules.</p></div>
+            <div class="p-4"><p class="font-mono text-sm text-[var(--white)]">B1.5 · Constructor completion checkpoint <span class="text-[var(--white-icon)]">◻</span></p><p class="mt-1 text-sm text-[var(--white-icon)]">All selected required constructors complete or have explicit compatibility-profile handling.</p></div>
+          </div>
+        </details>
+
+        <details class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div><p class="text-xs tracking-[.18em] text-[var(--white-icon)]">PHASE C · ◻</p><p class="mt-1 text-lg text-[var(--white)]">Typed Guest ABI</p></div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span><span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)] text-sm text-[var(--white-icon)]">
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C1 · Typed import registry</span><p class="mt-1">Replace broad generic resolution behavior with explicit guest data / guest function / unsupported categories.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C2 · First proven runtime dependency</span><p class="mt-1">Implement only the first behavior identified by B0.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C3 · Guest libc data objects</span><p class="mt-1">Guest-backed __sF, environ, errno, ctype tables, page size, and evidence-proven data imports.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C4 · Core memory and string ABI</span><p class="mt-1">Correct memcpy, memmove, memset, memcmp, strlen, strcmp, strstr, and related guest-memory semantics.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C5 · ARM EABI support</span><p class="mt-1">__aeabi memory helpers, unwind essentials, stack guard behavior, and ABI-correct failures.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C6 · File, time, environment, and paths</span><p class="mt-1">Controlled guest filesystem/VFS mapping, errno, data paths, assets, clock/time, and environment.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C7 · Threading, TLS, and synchronization</span><p class="mt-1">pthread model, TLS keys, mutexes, condition variables, guest thread creation policy, and scheduling rules.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">C8 · Dynamic loading semantics</span><p class="mt-1">Guest dlopen/dlsym/dlerror behavior and library scopes.</p></div>
+          </div>
+        </details>
+
+        <details class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div><p class="text-xs tracking-[.18em] text-[var(--white-icon)]">PHASE D · ◻</p><p class="mt-1 text-lg text-[var(--white)]">CPU Correctness and Performance</p></div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span><span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)] text-sm text-[var(--white-icon)]">
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D1 · Complete CpuBackend abstraction</span><p class="mt-1">Remove application-level direct Unicorn coupling.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D2 · ARM and Thumb-2 execution validation</span><p class="mt-1">Correct control flow, exceptions, calls, returns, stack rules, and mode transitions.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D3 · VFP and NEON policy</span><p class="mt-1">Classify unsupported instruction paths and implement required floating-point/vector support.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D4 · Real ARM32-on-AArch64 JIT backend</span><p class="mt-1">Integrate a functioning high-performance backend.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D5 · Block cache and invalidation</span><p class="mt-1">Self-modifying code, cache invalidation, memory protection, and translated-block lifecycle.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">D6 · Performance telemetry</span><p class="mt-1">Frame time, guest instruction count, HLE cost, memory map metrics, and bottleneck reporting.</p></div>
+          </div>
+        </details>
+
+        <details class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div><p class="text-xs tracking-[.18em] text-[var(--white-icon)]">PHASE E · ◻</p><p class="mt-1 text-lg text-[var(--white)]">Android Platform and Graphics Bridge</p></div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span><span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)] text-sm text-[var(--white-icon)]">
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E1 · Typed JNI reference model</span><p class="mt-1">Guest JavaVM/JNIEnv tables, local/global references, class/method IDs, strings, arrays, and exceptions.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E2 · Android lifecycle and window model</span><p class="mt-1">Surface changes, pause/resume, focus, activity state, and native window guest handles.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E3 · EGL guest-handle model</span><p class="mt-1">Guest display/context/surface handles. Never expose host EGL pointers to guest memory.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E4 · GLES command and resource bridge</span><p class="mt-1">Guest GL object IDs, shaders, buffers, textures, FBOs, uniforms, state, and errors.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E5 · Input, sensors, timing, and audio</span><p class="mt-1">Touch/controller events, sensors, looper behavior, audio path, and frame pacing.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">E6 · Rendering proof</span><p class="mt-1">Show a stable native-presented frame from guest Unity code.</p></div>
+          </div>
+        </details>
+
+        <details class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div><p class="text-xs tracking-[.18em] text-[var(--white-icon)]">PHASE F · ◻</p><p class="mt-1 text-lg text-[var(--white)]">O Sir Compatibility Profile</p></div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span><span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)] text-sm text-[var(--white-icon)]">
+            <div class="p-4 font-mono">F1 · Native initialization reaches stable state</div>
+            <div class="p-4 font-mono">F2 · Menu/title screen renders</div>
+            <div class="p-4 font-mono">F3 · Stable render loop</div>
+            <div class="p-4 font-mono">F4 · Input is accepted</div>
+            <div class="p-4 font-mono">F5 · Assets and game files load</div>
+            <div class="p-4 font-mono">F6 · Audio works</div>
+            <div class="p-4 font-mono">F7 · Pause/resume/lifecycle works</div>
+            <div class="p-4 font-mono">F8 · Save data works</div>
+            <div class="p-4 font-mono">F9 · Compatibility profile isolates title-specific fixes</div>
+            <div class="p-4 font-mono">F10 · Remove generic-runtime Unity/O Sir hard-coded paths</div>
+          </div>
+        </details>
+
+        <details class="group overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div><p class="text-xs tracking-[.18em] text-[var(--white-icon)]">PHASE G · ◻</p><p class="mt-1 text-lg text-[var(--white)]">Gameloft Expansion</p></div>
+            <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span><span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+          </summary>
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)] text-sm text-[var(--white-icon)]">
+            <div class="p-4"><span class="font-mono text-[var(--white)]">G1 · APK/OBB intake manifest</span><p class="mt-1">Exact version, hashes, ABI, libraries, assets, dependencies, and runtime-profile metadata.</p></div>
+            <div class="p-4"><span class="font-mono text-[var(--white)]">G2 · Shared legacy-Gameloft runtime layer</span><p class="mt-1">Reuse proven filesystem, JNI, EGL/GLES, input, audio, and ABI components.</p></div>
+            <div class="p-4 font-mono">G3 · The Dark Knight Rises profile</div>
+            <div class="p-4 font-mono">G4 · The Amazing Spider-Man profile</div>
+            <div class="p-4 font-mono">G5 · Versioned compatibility database</div>
+            <div class="p-4 font-mono">G6 · Performance and device-compatibility matrix</div>
+          </div>
+        </details>
+      </div>
+
+      <!-- PROJECT32DROID_ROADMAP_START -->
+    </div>
+  ) : (
+<p class="mt-2 text-lg text-[var(--white)]">
+              {doc.milestone}
+            </p>
+  )
+}
+
+          </div>
+        )
+      }
+    </section>
+  </main>
+</Layout>

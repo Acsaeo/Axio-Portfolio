@@ -1,0 +1,19 @@
+services:
+  axio-portfolio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: axio-portfolio
+    ports:
+      - "127.0.0.1:8088:80"
+    volumes:
+      - ./public/data:/usr/share/nginx/html/data:ro
+      - ./.htpasswd:/etc/nginx/.htpasswd:ro
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+      - /tmp

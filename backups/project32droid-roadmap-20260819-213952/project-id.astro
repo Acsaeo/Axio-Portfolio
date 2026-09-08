@@ -1,0 +1,96 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { projectDocs } from "@/data/projectDocs";
+
+export function getStaticPaths() {
+  return Object.entries(projectDocs).map(([id, doc]) => ({
+    params: { id },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const transitionName = `project-${Astro.params.id}`;
+---
+
+<Layout title={doc.title}>
+  <main class="min-h-screen max-w-5xl mx-auto py-28">
+    <a
+      href="/portfolio/#projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] hover:text-[var(--white)] transition"
+     data-project-back>
+      ← Back to projects
+    </a>
+
+    <section
+      class="mt-12 rounded-3xl border border-[var(--line)] bg-black p-7 md:p-12"
+      style={`view-transition-name:${transitionName}`}
+    >
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+        {doc.eyebrow}
+      </p>
+
+      <div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div>
+          <h1 class="text-5xl md:text-7xl font-medium leading-none">
+            {doc.title}
+          </h1>
+
+          <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+            {doc.intro}
+          </p>
+        </div>
+
+        <div class="min-w-[180px]">
+          <div class="flex justify-between text-sm">
+            <span class="text-[var(--white-icon)]">{doc.status}</span>
+            <span class="text-[var(--sec)]">{doc.progress}%</span>
+          </div>
+
+          <div
+            class="mt-2 h-2 overflow-hidden rounded-full bg-[#ffffff12]"
+            role="progressbar"
+            aria-label={`${doc.title} progress`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={doc.progress}
+          >
+            <div
+              class="h-full bg-[var(--sec)] shadow-[0_0_12px_#ff8a18]"
+              style={`width:${doc.progress}%`}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 border-t border-[var(--line)] pt-9">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">ACHIEVED</p>
+
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {
+            doc.capabilities.map((capability) => (
+              <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4 text-[var(--white-icon)]">
+                <span class="mr-2 text-[var(--sec)]">✓</span>
+                {capability}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {
+        doc.progress < 100 && (
+          <div class="mt-10 rounded-2xl border border-[#ff8a183d] bg-[#ff8a180d] p-5">
+            <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+              NEXT MILESTONE
+            </p>
+
+            <p class="mt-2 text-lg text-[var(--white)]">
+              {doc.milestone}
+            </p>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</Layout>

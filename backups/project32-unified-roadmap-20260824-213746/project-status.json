@@ -1,0 +1,49 @@
+[
+  {
+    "id": "lovetap",
+    "title": "LoveTap",
+    "tagline": "A focused Android app built around a simple, human interaction.",
+    "status": "active",
+    "progress": 78,
+    "next": "Resolve release-blocking bugs and prepare the first release.",
+    "tags": [
+      "Android",
+      "App Development",
+      "Release"
+    ],
+    "githubRepo": null,
+    "featured": true
+  },
+  {
+    "id": "project32droid",
+    "title": "Project32Droid",
+    "tagline": "A 32-bit Android compatibility and emulation experiment.",
+    "status": "active",
+    "progress": 72,
+    "next": "Finish the 32-bit emulator and stabilize the target runtime.",
+    "tags": [
+      "Kotlin",
+      "C++",
+      "JNI",
+      "Android NDK"
+    ],
+    "githubRepo": "Acsaeo/Project32Droid",
+    "featured": true
+  },
+  {
+    "id": "cat-axiom",
+    "title": "Cat / Axiom",
+    "tagline": "A self-hosted, phone-first AI companion with voice and automation.",
+    "status": "planning",
+    "progress": 20,
+    "next": "Build the phone-first talking AI companion and voice foundation.",
+    "tags": [
+      "AI",
+      "Voice",
+      "Automation",
+      "Mobile"
+    ],
+    "githubRepo": null,
+    "featured": true
+  }
+]

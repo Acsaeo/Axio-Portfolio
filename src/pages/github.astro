@@ -1,0 +1,129 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="GitHub Project">
+  <main class="min-h-screen max-w-5xl mx-auto py-28">
+    <a
+      href="/portfolio/#projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] hover:text-[var(--white)] transition"
+    >
+      ← Back to projects
+    </a>
+
+    <section
+      id="github-preview"
+      class="mt-12 rounded-3xl border border-[var(--line)] bg-black p-7 md:p-12"
+    >
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+        PUBLIC GITHUB PROJECT
+      </p>
+
+      <div id="github-content" class="mt-6">
+        <p class="text-[var(--white-icon)]">Loading project preview…</p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const base = "/portfolio/";
+  const params = new URLSearchParams(window.location.search);
+  const requestedRepo = params.get("repo");
+
+  const escapeHtml = (value) =>
+    String(value ?? "").replace(
+      /[&<>"']/g,
+      (char) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[char]
+    );
+
+  const target = document.querySelector("#github-content");
+
+  fetch(base + "data/github-projects.json", { cache: "no-store" })
+    .then((response) => response.json())
+    .then((projects) => {
+      const project = projects.find(
+        (item) => item.fullName === requestedRepo
+      );
+
+      if (!project) {
+        target.innerHTML = `
+          <h1 class="text-4xl md:text-6xl font-medium">Project unavailable</h1>
+          <p class="mt-5 text-[var(--white-icon)]">
+            This project is no longer in the public portfolio feed.
+          </p>
+        `;
+        return;
+      }
+
+      const updated = new Date(project.updatedAt).toLocaleDateString();
+
+      target.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+          <div>
+            <h1 class="text-5xl md:text-7xl font-medium leading-none">
+              ${escapeHtml(project.name)}
+            </h1>
+            <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+              ${escapeHtml(project.description)}
+            </p>
+          </div>
+
+          <a
+            href="${escapeHtml(project.url)}"
+            target="_blank"
+            rel="noreferrer"
+            class="inline-flex rounded-xl border border-[var(--sec)] px-5 py-3 text-[var(--sec)] hover:bg-[var(--sec)] hover:text-black transition"
+          >
+            View on GitHub ↗
+          </a>
+        </div>
+
+        <div class="mt-14 grid gap-3 md:grid-cols-3">
+          <div class="rounded-xl border border-[var(--line)] bg-[#050505] p-5">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">LANGUAGE</p>
+            <p class="mt-2 text-lg">${escapeHtml(project.language || "Mixed")}</p>
+          </div>
+
+          <div class="rounded-xl border border-[var(--line)] bg-[#050505] p-5">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">STARS</p>
+            <p class="mt-2 text-lg">${escapeHtml(project.stars)}</p>
+          </div>
+
+          <div class="rounded-xl border border-[var(--line)] bg-[#050505] p-5">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">LAST UPDATED</p>
+            <p class="mt-2 text-lg">${escapeHtml(updated)}</p>
+          </div>
+        </div>
+
+        <div class="mt-8 border-t border-[var(--line)] pt-7">
+          <p class="text-xs tracking-[.16em] text-[var(--sec)]">PROJECT TAGS</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            ${(project.topics || []).length
+              ? project.topics.map((topic) => `
+                <span class="rounded-full border border-[var(--line)] px-3 py-1 text-sm text-[var(--white-icon)]">
+                  ${escapeHtml(topic)}
+                </span>
+              `).join("")
+              : `<span class="text-[var(--white-icon)]">No public tags listed.</span>`
+            }
+          </div>
+        </div>
+      `;
+    })
+    .catch(() => {
+      target.innerHTML = `
+        <h1 class="text-4xl md:text-6xl font-medium">Project preview unavailable</h1>
+        <p class="mt-5 text-[var(--white-icon)]">
+          Please return to the portfolio and try again.
+        </p>
+      `;
+    });
+</script>

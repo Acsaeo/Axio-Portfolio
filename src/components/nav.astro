@@ -1,0 +1,88 @@
+---
+const links = [
+  ["Home", "#home"],
+  ["Projects", "#projects"],
+  ["Contact", "#contact"],
+];
+---
+
+<nav
+  id="main-nav"
+  class="fixed left-1/2 top-5 z-50 w-[min(720px,88vw)] -translate-x-1/2 rounded-full border border-[var(--line)] bg-[var(--component-bg)] backdrop-blur-xl"
+>
+  <div class="flex justify-around p-3">
+    {
+      links.map(([label, href]) => (
+        <a
+          href={href}
+          data-nav-link
+          class="relative px-3 py-1 text-sm text-[var(--white-icon)] transition hover:text-[var(--sec)]"
+        >
+          {label}
+          <span class="nav-flame absolute bottom-0 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-[var(--sec)] transition-all duration-300" />
+        </a>
+      ))
+    }
+  </div>
+</nav>
+
+<script>
+  let navObserver: IntersectionObserver | undefined;
+
+  function setupNavFlame() {
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]")
+    );
+
+    if (!links.length) return;
+
+    function activate(id: string) {
+      links.forEach((link) => {
+        const active = link.getAttribute("href") === `#${id}`;
+
+        link.classList.toggle("text-[var(--sec)]", active);
+        link.classList.toggle("text-[var(--white-icon)]", !active);
+        link.setAttribute("aria-current", active ? "location" : "false");
+
+        const line = link.querySelector<HTMLElement>(".nav-flame");
+
+        if (line) {
+          line.classList.toggle("w-[72%]", active);
+          line.classList.toggle("shadow-[0_0_10px_#ff8a18]", active);
+        }
+      });
+    }
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        activate(link.getAttribute("href")?.replace("#", "") || "home");
+      });
+    });
+
+    navObserver?.disconnect();
+
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+
+    navObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) activate(visible.target.id);
+      },
+      {
+        rootMargin: "-35% 0px -55% 0px",
+        threshold: [0, 0.1, 0.25, 0.5],
+      }
+    );
+
+    sections.forEach((section) => navObserver?.observe(section));
+
+    const hash = window.location.hash.replace("#", "");
+    activate(hash || "home");
+  }
+
+  setupNavFlame();
+  document.addEventListener("astro:page-load", setupNavFlame);
+</script>

@@ -1,0 +1,9 @@
+# Merge this volumes block into YOUR existing n8n service in docker-compose.yml.
+# Windows Docker Desktop bind mounts use forward slashes.
+services:
+  n8n:
+    environment:
+      - AXIO_WEBHOOK_SECRET=REPLACE_WITH_A_LONG_RANDOM_SECRET
+    volumes:
+      - C:/DevProjects/Axio-Portfolio/n8n:/files:ro
+      - C:/DevProjects/Axio-Portfolio/public/data:/site/public/data:rw

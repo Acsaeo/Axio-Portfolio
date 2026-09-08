@@ -1,0 +1,22 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[var(--line)] py-12 text-center text-sm text-[var(--white-icon)]">
+  <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
+    <span>Built and operated by Axiolus · © {year}</span>
+
+    <span class="text-[var(--line)]" aria-hidden="true">·</span>
+
+    <a
+      href="https://ko-fi.com/axim"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-1.5 rounded-full border border-[var(--sec)] px-3 py-1 text-xs text-[var(--sec)] transition hover:bg-[var(--sec)] hover:text-black"
+      aria-label="Support Axiolus on Ko-fi"
+    >
+      <span aria-hidden="true">☕</span>
+      Support on Ko-fi
+    </a>
+  </div>
+</footer>

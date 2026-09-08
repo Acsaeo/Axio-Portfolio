@@ -1,0 +1,24 @@
+[
+  {
+    "id": "axio-portfolio",
+    "title": "Axio Portfolio",
+    "status": "active",
+    "progress": 20,
+    "next": "Deploy the private lab route behind your reverse proxy",
+    "note": "Initial public portfolio and private project hub setup.",
+    "updatedAt": "2026-08-08",
+    "visibility": "private",
+    "tags": ["Astro", "Docker", "n8n"]
+  },
+  {
+    "id": "local-ai-stack",
+    "title": "Local AI Stack",
+    "status": "active",
+    "progress": 65,
+    "next": "Call the milestone webhook from an OpenWebUI tool",
+    "note": "OpenWebUI and n8n are self-hosted.",
+    "updatedAt": "2026-08-08",
+    "visibility": "private",
+    "tags": ["OpenWebUI", "n8n", "LLM"]
+  }
+]

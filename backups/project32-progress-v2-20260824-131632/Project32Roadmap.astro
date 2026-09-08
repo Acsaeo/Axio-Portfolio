@@ -1,0 +1,416 @@
+<section class="mt-6 space-y-6" data-project32-roadmap>
+  <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+    <div class="border-b border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,138,24,.16),transparent_55%)] px-5 py-5">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+            PROJECT32DROID ROADMAP
+          </p>
+
+          <h2 class="mt-2 text-2xl text-[var(--white)] md:text-3xl">
+            Rootless ARM32 runtime
+          </h2>
+
+          <p class="mt-2 text-sm text-[var(--white-icon)]">
+            armeabi-v7a guest runtime on arm64-v8a Android
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="rounded-full border border-[var(--sec)] bg-[var(--sec)] px-3 py-1 text-black">
+            Foundation complete
+          </span>
+
+          <span class="rounded-full border border-[var(--sec)] px-3 py-1 text-[var(--sec)]">
+            Runtime tracing active
+          </span>
+
+          <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--coral)]">
+            Phase C dependency pending
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-px bg-[var(--line)] md:grid-cols-2">
+      <div class="bg-black p-5">
+        <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+          CURRENT MILESTONE
+        </p>
+
+        <p class="mt-3 font-mono text-sm text-[var(--white)]">
+          C3b · Inspect target veneer
+        </p>
+
+        <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+          Reconnect the device, install the built veneer inspection work,
+          execute it, then inspect the actual veneer words.
+        </p>
+      </div>
+
+      <div class="bg-black p-5">
+        <p class="text-xs tracking-[.16em] text-[var(--coral)]">
+          CURRENT BLOCKER
+        </p>
+
+        <p class="mt-3 font-mono text-sm text-[var(--white)]">
+          nativeRecreateGfxState raw-pointer provenance
+        </p>
+
+        <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+          C3b is built but has not yet been installed or executed on-device.
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t border-[var(--line)] bg-black p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+        VERIFIED FAULT PATH
+      </p>
+
+      <p class="mt-3 break-words font-mono text-xs leading-6 text-[var(--white-icon)] md:text-sm">
+        nativeRecreateGfxState
+        <span class="px-1 text-[var(--sec)]">→</span>
+        raw fetch PC 0x000485bc
+        <span class="px-1 text-[var(--sec)]">→</span>
+        LR 0x4046a704
+        <span class="px-1 text-[var(--sec)]">→</span>
+        BL at 0x4046a700
+        <span class="px-1 text-[var(--coral)]">→</span>
+        target veneer inspection
+      </p>
+    </div>
+  </div>
+
+  <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+    <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          BEFORE PRE-PHASE A · ✅ COMPLETE
+        </p>
+        <p class="mt-1 text-lg text-[var(--white)]">
+          Android and guest-runtime foundation
+        </p>
+      </div>
+
+      <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+      <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+    </summary>
+
+    <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>Android project builds and installs</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>APK extraction and ELF loading</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>Guest memory mapping and basic import stubs</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>JNI environment and JNI_OnLoad execution</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>Unity native-method discovery</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>EGL/graphics host scaffolding</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+      <div class="flex items-center justify-between gap-4 p-4 text-sm">
+        <span>Guest execution history and trap provenance tooling</span>
+        <span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">complete</span>
+      </div>
+    </div>
+  </details>
+
+  <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+    <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          PHASE A · ✅ COMPLETE
+        </p>
+        <p class="mt-1 text-lg text-[var(--white)]">
+          Guest-code integrity and constructor-flow safety
+        </p>
+      </div>
+
+      <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+      <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+    </summary>
+
+    <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          A1.1 · Disable fixed-PC guest intercepts
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Commit <span class="font-mono text-[var(--white)]">1d971b5</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          A1.2 · Remove constructor-flow corruption
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          <span class="font-mono text-[var(--white)]">0x4020e1c0</span>
+          no longer bypasses a live function epilogue.
+        </p>
+      </div>
+    </div>
+  </details>
+
+  <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+    <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          PHASE B · ✅ COMPLETE / ACTIVE
+        </p>
+        <p class="mt-1 text-lg text-[var(--white)]">
+          Runtime provenance and controlled execution
+        </p>
+      </div>
+
+      <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+      <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+    </summary>
+
+    <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B0 · Guest fault and execution tracing
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Historical B0 commits
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.1 · Controlled guest function runner
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Commit <span class="font-mono text-[var(--white)]">f4a57a0</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.2 · VFP capability enablement
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Commit <span class="font-mono text-[var(--white)]">ef650c9</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.3 · VFP stack integrity
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          VPUSH/VPOP self-test passed
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.4 · Stop-thunk diagnosis
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Mismatch identified
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.5 · Stop-thunk name repair
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Commit <span class="font-mono text-[var(--white)]">9fc6a95</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.6 · Fetch faults fail fast
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Commit <span class="font-mono text-[var(--white)]">9fc6a95</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.7 · Constructor index 0
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Returns at PC=<span class="font-mono text-[var(--white)]">0xdead01c0</span>
+          through <span class="font-mono text-[var(--white)]">P32_STOP</span>
+        </p>
+      </div>
+
+      <div class="border-l-2 border-[var(--coral)] bg-[#ff4d1808] p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          B1.8 · Constructor prefix beyond index 0
+          <span class="text-[var(--coral)]">PENDING</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Do not run until the Phase C blocker is resolved.
+        </p>
+      </div>
+    </div>
+  </details>
+
+  <details open class="group overflow-hidden rounded-2xl border border-[var(--sec)] bg-[#050505]">
+    <summary class="flex cursor-pointer list-none flex-col gap-2 px-5 py-4 transition hover:bg-[#ff8a1810] sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          PHASE C · ACTIVE INVESTIGATION
+        </p>
+        <p class="mt-1 text-lg text-[var(--white)]">
+          nativeRecreateGfxState provenance
+        </p>
+      </div>
+
+      <span class="text-xs text-[var(--sec)] group-open:hidden">Expand +</span>
+      <span class="hidden text-xs text-[var(--sec)] group-open:inline">Collapse −</span>
+    </summary>
+
+    <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C0 · Isolate nativeRecreateGfxState fault
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Raw fetch PC=<span class="font-mono text-[var(--white)]">0x000485bc</span>,
+          LR=<span class="font-mono text-[var(--white)]">0x4046a704</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C1 · Decode caller
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          <span class="font-mono text-[var(--white)]">0x4046a700</span>
+          is BL <span class="font-mono text-[var(--white)]">0x40049518</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C2 · Verify mapped destination
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          <span class="font-mono text-[var(--white)]">0x400485bc</span>
+          maps to ARM <span class="font-mono text-[var(--white)]">PUSH {'{lr}'}</span>
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C3 · Audit dynamic relocation parser
+          <span class="text-[var(--sec)]">✅</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Current parser converts dynamic virtual addresses to file offsets.
+        </p>
+      </div>
+
+      <div class="border-l-2 border-[var(--coral)] bg-[#ff4d1808] p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C3b · Inspect target veneer
+          <span class="text-[var(--coral)]">BLOCKED ON DEVICE RECONNECT</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          C3b was built, not installed or executed.
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C4 · Classify raw-pointer source
+          <span class="text-[var(--white-icon)]">PENDING</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Depends on C3b veneer words.
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C5 · Repair verified relocation/veneer defect
+          <span class="text-[var(--white-icon)]">PENDING</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Only after C3b/C4 evidence.
+        </p>
+      </div>
+
+      <div class="p-4">
+        <p class="font-mono text-sm text-[var(--white)]">
+          C6 · nativeRecreateGfxState returns through P32_STOP
+          <span class="text-[var(--white-icon)]">PENDING</span>
+        </p>
+        <p class="mt-1 text-sm text-[var(--white-icon)]">
+          Phase C completion criterion.
+        </p>
+      </div>
+    </div>
+  </details>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <section class="rounded-2xl border border-[var(--line)] bg-[#050505] p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--white-icon)]">PHASE D · NOT STARTED</p>
+      <h3 class="mt-2 text-lg text-[var(--white)]">Controlled native resume</h3>
+      <p class="mt-2 text-sm text-[var(--white-icon)]">
+        Execute nativeResume under the controlled runner.
+      </p>
+    </section>
+
+    <section class="rounded-2xl border border-[var(--line)] bg-[#050505] p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--white-icon)]">PHASE E · NOT STARTED</p>
+      <h3 class="mt-2 text-lg text-[var(--white)]">First safe native render</h3>
+      <p class="mt-2 text-sm text-[var(--white-icon)]">
+        Execute the first safe nativeRender path and retain host EGL output.
+      </p>
+    </section>
+
+    <section class="rounded-2xl border border-[var(--line)] bg-[#050505] p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--white-icon)]">PHASE F · NOT STARTED</p>
+      <h3 class="mt-2 text-lg text-[var(--white)]">Runtime stabilization</h3>
+      <p class="mt-2 text-sm text-[var(--white-icon)]">
+        Expand constructor prefix, stabilize guest threads/imports, and remove diagnostics.
+      </p>
+    </section>
+
+    <section class="rounded-2xl border border-[var(--line)] bg-[#050505] p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--white-icon)]">PHASE G · NOT STARTED</p>
+      <h3 class="mt-2 text-lg text-[var(--white)]">Validation and cleanup</h3>
+      <p class="mt-2 text-sm text-[var(--white-icon)]">
+        Cleanup, regression runs, and release-quality validation.
+      </p>
+    </section>
+  </div>
+
+  <!-- PROJECT32DROID_ROADMAP_START -->
+</section>

@@ -1,0 +1,46 @@
+---
+const title = 'Axio Lab';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>{title}</title>
+    <style>
+      :root { color-scheme: dark; --bg:#0b0c0e; --panel:#121418; --line:#292e37; --ink:#eef0f3; --muted:#9299a6; --accent:#9ff5c1; }
+      * { box-sizing:border-box } body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; }
+      main { width:min(960px,calc(100% - 32px)); margin:0 auto; padding:56px 0 80px; }
+      header { display:flex; align-items:end; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); padding-bottom:24px; margin-bottom:24px; }
+      h1 { font-size:clamp(2rem,7vw,4rem); line-height:1; margin:0; letter-spacing:-.08em } p { color:var(--muted); margin:8px 0 0 } a { color:var(--accent) }
+      #signal { color:var(--accent); white-space:nowrap; font-size:.8rem } .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:12px; }
+      .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:18px; transition:transform .18s ease,border-color .18s ease; }
+      .card:hover { transform:translateY(-3px); border-color:#667080 } .top,.meta { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+      h2 { font-size:1.05rem; margin:0 } .status { color:var(--accent); font-size:.75rem; text-transform:uppercase; letter-spacing:.08em } .bar { height:5px; overflow:hidden; border-radius:99px; background:#242933; margin:18px 0 9px; }.fill { height:100%; background:var(--accent); border-radius:inherit; }
+      .next { color:var(--ink); margin-top:16px }.note { font-size:.85rem }.tags { color:var(--muted); font-size:.76rem }.empty { color:var(--muted); border:1px dashed var(--line); padding:18px; border-radius:10px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header><div><h1>AXIO / LAB</h1><p>private project signal board</p></div><div id="signal">â— loading signal</div></header>
+      <section id="app" class="grid" aria-live="polite"></section>
+    </main>
+    <script>
+      const app = document.querySelector('#app');
+      const signal = document.querySelector('#signal');
+      const glyph = { idea:'Â·', active:'â†—', paused:'â…¡', shipped:'âœ“' };
+      const escapeHtml = (value) => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+      async function load() {
+        try {
+          const res = await fetch(import.meta.env.BASE_URL + 'data/milestones.json?ts=' + Date.now(), { cache:'no-store' });
+          if (!res.ok) throw new Error('Could not load milestones');
+          const items = await res.json();
+          app.innerHTML = items.map(m => `<article class="card"><div class="top"><h2>${escapeHtml(m.title)}</h2><span class="status">${glyph[m.status] ?? 'Â·'} ${escapeHtml(m.status)}</span></div><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(m.progress)||0))}%"></div></div><div class="meta"><span>${escapeHtml(m.progress)}% complete</span><span class="tags">${(m.tags || []).map(escapeHtml).join(' Â· ')}</span></div><p class="next">next â†’ ${escapeHtml(m.next)}</p><p class="note">${escapeHtml(m.note || '')}</p><p class="tags">updated ${escapeHtml(m.updatedAt || 'unknown')}</p></article>`).join('') || '<p class="empty">No milestones yet. Send one from n8n.</p>';
+          signal.textContent = 'â— signal online';
+        } catch (e) { app.innerHTML = '<p class="empty">Signal unavailable. Check /public/data/milestones.json</p>'; signal.textContent = 'â—‹ signal lost'; }
+      }
+      load(); setInterval(load, 30000);
+    </script>
+  </body>
+</html>

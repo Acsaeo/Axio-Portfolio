@@ -1,0 +1,176 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const capabilities = [
+  {
+    name: "Private AI workspace",
+    progress: 70,
+    description:
+      "A personal AI environment for conversations, useful tools, experiments, and everyday assistance.",
+  },
+  {
+    name: "Automation workflows",
+    progress: 35,
+    description:
+      "A growing system for notifications, project updates, connected services, and personal operations.",
+  },
+  {
+    name: "Personal cloud & media",
+    progress: 95,
+    description:
+      "Self-owned files, synchronization, media, remote access, and useful daily services.",
+  },
+  {
+    name: "Disaster recovery backup",
+    progress: 100,
+    description:
+      "A complete recovery direction for preserving important configuration, service state, and continuity.",
+  },
+];
+
+const overall = Math.round(
+  capabilities.reduce((total, capability) => total + capability.progress, 0) /
+    capabilities.length
+);
+---
+
+<Layout title="Ax-Homelab">
+  <main class="min-h-screen max-w-5xl mx-auto py-28" style="view-transition-name:project-ax-homelab">
+    <a
+      href="/portfolio/#projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] hover:text-[var(--white)] transition"
+     data-project-back>
+      ← Back to projects
+    </a>
+
+    <section class="mt-12 rounded-3xl border border-[var(--line)] bg-black p-7 md:p-12">
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+        SYSTEM PROJECT
+      </p>
+
+      <div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div>
+          <h1 class="text-5xl md:text-7xl font-medium leading-none">
+            Ax-Homelab
+          </h1>
+
+          <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+            A personal systems project for self-owned digital services,
+            automation, AI, cloud access, media, continuity, and creative work.
+          </p>
+        </div>
+
+        <div class="min-w-[180px]">
+          <div class="flex justify-between text-sm">
+            <span class="text-[var(--white-icon)]">Active build</span>
+            <span class="text-[var(--sec)]">{overall}%</span>
+          </div>
+
+          <div
+            class="mt-2 h-2 overflow-hidden rounded-full bg-[#ffffff12]"
+            role="progressbar"
+            aria-label="Ax-Homelab overall progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={overall}
+          >
+            <div
+              class="h-full bg-[var(--sec)] shadow-[0_0_12px_#ff8a18]"
+              style={`width:${overall}%`}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 border-t border-[var(--line)] pt-9">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          AVAILABLE CAPABILITIES
+        </p>
+
+        <div class="mt-5 grid gap-3 md:grid-cols-2">
+          {
+            capabilities.map((capability) => (
+              <article class="rounded-xl border border-[var(--line)] bg-[#050505] p-5">
+                <div class="flex justify-between gap-4">
+                  <h2 class="text-lg">{capability.name}</h2>
+                  <span
+                    class:list={[
+                      "text-sm",
+                      capability.progress === 100
+                        ? "text-[var(--sec)]"
+                        : "text-[var(--coral)]",
+                    ]}
+                  >
+                    {capability.progress}%
+                  </span>
+                </div>
+
+                <p class="mt-3 text-sm text-[var(--white-icon)]">
+                  {capability.description}
+                </p>
+
+                <div
+                  class="mt-5 h-1.5 overflow-hidden rounded-full bg-[#ffffff12]"
+                  role="progressbar"
+                  aria-label={`${capability.name} progress`}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow={capability.progress}
+                >
+                  <div
+                    class:list={[
+                      "h-full",
+                      capability.progress === 100
+                        ? "bg-[var(--sec)]"
+                        : "bg-[var(--coral)]",
+                    ]}
+                    style={`width:${capability.progress}%`}
+                  ></div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-[#ff8a183d] bg-[#ff8a180d] p-5">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          NEXT SYSTEM MILESTONE
+        </p>
+
+        <p class="mt-2 text-lg text-[var(--white)]">
+          Expand the automation layer into a more complete personal operating
+          system, while continuing to strengthen the private AI workspace.
+        </p>
+      </div>
+
+      <div class="mt-10 border-t border-[var(--line)] pt-8">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+          PROJECT PRINCIPLES
+        </p>
+
+        <ul class="mt-5 grid gap-3 md:grid-cols-2 text-[var(--white-icon)]">
+          <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4">
+            <span class="mr-2 text-[var(--sec)]">✓</span>
+            Personal ownership over important digital services
+          </li>
+
+          <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4">
+            <span class="mr-2 text-[var(--sec)]">✓</span>
+            Useful systems that support real daily work and creativity
+          </li>
+
+          <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4">
+            <span class="mr-2 text-[var(--sec)]">✓</span>
+            A resilient foundation that can evolve over time
+          </li>
+
+          <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4">
+            <span class="mr-2 text-[var(--sec)]">✓</span>
+            Technology that feels personal instead of disposable
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</Layout>

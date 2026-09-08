@@ -1,0 +1,26 @@
+---
+const title = 'Axiolus / Projects';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>{title}</title>
+    <style>
+      :root{color-scheme:dark;--bg:#0b0c0e;--panel:#121418;--line:#292e37;--ink:#eef0f3;--muted:#9299a6;--accent:#9ff5c1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}main{width:min(1100px,calc(100% - 32px));margin:auto;padding:48px 0 80px}nav{display:flex;gap:18px;margin-bottom:46px;font-size:.82rem}a{color:var(--accent)}h1{font-size:clamp(2.6rem,8vw,5rem);letter-spacing:-.09em;line-height:.9;margin:0}h2{margin:0;font-size:1.2rem}p{color:var(--muted)}.intro{max-width:700px;margin:18px 0 46px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}.card{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:19px;transition:transform .18s,border-color .18s}.card:hover{transform:translateY(-3px);border-color:#667080}.top{display:flex;justify-content:space-between;gap:12px}.status{color:var(--accent);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase}.bar{height:5px;border-radius:99px;background:#252b34;margin:20px 0 8px;overflow:hidden}.fill{height:100%;background:var(--accent)}.small{font-size:.82rem}.tags{color:var(--muted);font-size:.76rem}.section{margin-top:56px}.repo{border-left:2px solid #45505e;padding-left:12px}.empty{color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:18px}
+    </style>
+  </head>
+  <body><main>
+    <nav><a href={import.meta.env.BASE_URL}>home</a><a href={`${import.meta.env.BASE_URL}projects/`}>projects</a><a href={`${import.meta.env.BASE_URL}homelab/`}>ax-homelab</a></nav>
+    <h1>AXIOLUS<br/>/ PROJECTS</h1><p class="intro">Selected work across Android, native systems, self-hosted AI, automation, and game modification. The repository feed refreshes automatically; the milestone layer stays deliberately human.</p>
+    <section><h2>Current focus</h2><div id="featured" class="grid section" aria-live="polite"></div></section>
+    <section class="section"><h2>Public GitHub</h2><div id="github" class="grid section" aria-live="polite"></div></section>
+  </main><script>
+    const base='/portfolio/'; const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+    const renderStatus=p=>`<article class="card"><div class="top"><h2>${esc(p.title)}</h2><span class="status">${esc(p.status)}</span></div><p>${esc(p.tagline)}</p><div class="bar"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(p.progress)||0))}%"></div></div><div class="small">${esc(p.progress)}% complete</div><p><b>next →</b> ${esc(p.next)}</p><p class="tags">${(p.tags||[]).map(esc).join(' · ')}</p></article>`;
+    const renderRepo=r=>`<article class="card repo"><div class="top"><h2>${esc(r.name)}</h2><a href="${esc(r.url)}" target="_blank" rel="noreferrer">GitHub ↗</a></div><p>${esc(r.description)}</p><p class="tags">${[r.language,...(r.topics||[])].filter(Boolean).map(esc).join(' · ')}</p><p class="small">updated ${esc(new Date(r.updatedAt).toLocaleDateString())}</p></article>`;
+    Promise.all([fetch(base+'data/project-status.json',{cache:'no-store'}),fetch(base+'data/github-projects.json',{cache:'no-store'})]).then(async([a,b])=>[await a.json(),await b.json()]).then(([status,repos])=>{document.querySelector('#featured').innerHTML=status.map(renderStatus).join('');document.querySelector('#github').innerHTML=repos.length?repos.map(renderRepo).join(''):'<p class="empty">Public GitHub projects will appear here after the first sync.</p>';}).catch(()=>{document.querySelector('#featured').innerHTML='<p class="empty">Project signal unavailable.</p>';});
+  </script></body>
+</html>

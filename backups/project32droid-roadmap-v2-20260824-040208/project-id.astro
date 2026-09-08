@@ -1,0 +1,223 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { projectDocs } from "@/data/projectDocs";
+
+export function getStaticPaths() {
+  return Object.entries(projectDocs).map(([id, doc]) => ({
+    params: { id },
+    props: { doc },
+  }));
+}
+
+const { doc } = Astro.props;
+const transitionName = `project-${Astro.params.id}`;
+---
+
+<Layout title={doc.title}>
+  <main class="min-h-screen max-w-5xl mx-auto py-28">
+    <a
+      href="/portfolio/#projects"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] hover:text-[var(--white)] transition"
+     data-project-back>
+      ← Back to projects
+    </a>
+
+    <section
+      class="mt-12 rounded-3xl border border-[var(--line)] bg-black p-7 md:p-12"
+      style={`view-transition-name:${transitionName}`}
+    >
+      <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+        {doc.eyebrow}
+      </p>
+
+      <div class="mt-4 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div>
+          <h1 class="text-5xl md:text-7xl font-medium leading-none">
+            {doc.title}
+          </h1>
+
+          <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+            {doc.intro}
+          </p>
+        </div>
+
+        <div class="min-w-[180px]">
+          <div class="flex justify-between text-sm">
+            <span class="text-[var(--white-icon)]">{doc.status}</span>
+            <span class="text-[var(--sec)]">{doc.progress}%</span>
+          </div>
+
+          <div
+            class="mt-2 h-2 overflow-hidden rounded-full bg-[#ffffff12]"
+            role="progressbar"
+            aria-label={`${doc.title} progress`}
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={doc.progress}
+          >
+            <div
+              class="h-full bg-[var(--sec)] shadow-[0_0_12px_#ff8a18]"
+              style={`width:${doc.progress}%`}
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 border-t border-[var(--line)] pt-9">
+        <p class="text-xs tracking-[.18em] text-[var(--sec)]">ACHIEVED</p>
+
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {
+            doc.capabilities.map((capability) => (
+              <li class="rounded-xl border border-[var(--line)] bg-[#050505] p-4 text-[var(--white-icon)]">
+                <span class="mr-2 text-[var(--sec)]">✓</span>
+                {capability}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {
+        doc.progress < 100 && (
+          <div class="mt-10 rounded-2xl border border-[#ff8a183d] bg-[#ff8a180d] p-5">
+            <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+              NEXT MILESTONE
+            </p>
+
+            
+{
+  Astro.params.id === "project32droid" ? (
+    <div class="mt-6 space-y-5" data-project32-roadmap>
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <span class="rounded-full border border-[var(--sec)] bg-[var(--sec)] px-3 py-1 text-black">
+          4 complete
+        </span>
+        <span class="rounded-full border border-[var(--sec)] px-3 py-1 text-[var(--sec)]">
+          A5 next
+        </span>
+        <span class="rounded-full border border-[var(--line)] px-3 py-1 text-[var(--white-icon)]">
+          34 planned
+        </span>
+      </div>
+
+      <div class="space-y-4">
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE A</p>
+            <p class="text-sm text-[var(--white-icon)]">ELF loader correctness</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="flex items-center gap-3 px-4 py-3 text-sm"><span class="rounded border border-[var(--sec)] bg-[var(--sec)] px-2 py-0.5 text-xs text-black">A1</span><span class="flex-1">Dependency graph and load states</span><span class="text-xs uppercase tracking-[.12em] text-black">done</span></div>
+            <div class="flex items-center gap-3 px-4 py-3 text-sm"><span class="rounded border border-[var(--sec)] bg-[var(--sec)] px-2 py-0.5 text-xs text-black">A2</span><span class="flex-1">PT_LOAD VA/file translation</span><span class="text-xs uppercase tracking-[.12em] text-black">done</span></div>
+            <div class="flex items-center gap-3 px-4 py-3 text-sm"><span class="rounded border border-[var(--sec)] bg-[var(--sec)] px-2 py-0.5 text-xs text-black">A3</span><span class="flex-1">Relocation and symbol bounds</span><span class="text-xs uppercase tracking-[.12em] text-black">done</span></div>
+            <div class="flex items-center gap-3 px-4 py-3 text-sm"><span class="rounded border border-[var(--sec)] bg-[var(--sec)] px-2 py-0.5 text-xs text-black">A4</span><span class="flex-1">Constructor metadata validation</span><span class="text-xs uppercase tracking-[.12em] text-black">done</span></div>
+            <div class="flex items-center gap-3 px-4 py-3 text-sm"><span class="rounded border border-[var(--sec)] px-2 py-0.5 text-xs text-[var(--sec)]">A5</span><span class="flex-1 text-[var(--white)]">Relocated constructor target inspection</span><span class="text-xs uppercase tracking-[.12em] text-[var(--sec)]">next</span></div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE B</p>
+            <p class="text-sm text-[var(--white-icon)]">Safe runtime initialization</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">B1 · Execute one validated constructor at a time</div>
+            <div class="px-4 py-3 text-sm">B2 · Implement constructor stop/return boundaries</div>
+            <div class="px-4 py-3 text-sm">B3 · Run JNI_OnLoad after constructor policy is known</div>
+            <div class="px-4 py-3 text-sm">B4 · Remove unsafe generic constructor assumptions</div>
+            <div class="px-4 py-3 text-sm">B5 · Add per-library initialization traces</div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE C</p>
+            <p class="text-sm text-[var(--white-icon)]">Core guest ABI</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">C1 · Replace generic import fallback with typed registry</div>
+            <div class="px-4 py-3 text-sm">C2 · Guest data objects: __sF, environ, ctype, errno</div>
+            <div class="px-4 py-3 text-sm">C3 · Memory/string functions</div>
+            <div class="px-4 py-3 text-sm">C4 · ARM EABI helpers</div>
+            <div class="px-4 py-3 text-sm">C5 · libc time/filesystem/error behavior</div>
+            <div class="px-4 py-3 text-sm">C6 · pthread/TLS model</div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE D</p>
+            <p class="text-sm text-[var(--white-icon)]">CPU performance</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">D1 · Complete CpuBackend abstraction</div>
+            <div class="px-4 py-3 text-sm">D2 · Remove application-level Unicorn coupling</div>
+            <div class="px-4 py-3 text-sm">D3 · Implement real ARM32 JIT backend</div>
+            <div class="px-4 py-3 text-sm">D4 · Validate ARM, Thumb-2, VFP, and NEON</div>
+            <div class="px-4 py-3 text-sm">D5 · Add block cache/invalidation</div>
+            <div class="px-4 py-3 text-sm">D6 · Add performance counters and frame budgets</div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE E</p>
+            <p class="text-sm text-[var(--white-icon)]">Android and graphics</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">E1 · Typed JNI reference/object tables</div>
+            <div class="px-4 py-3 text-sm">E2 · Surface/window lifecycle</div>
+            <div class="px-4 py-3 text-sm">E3 · EGL handle translation</div>
+            <div class="px-4 py-3 text-sm">E4 · GLES resource/state marshalling</div>
+            <div class="px-4 py-3 text-sm">E5 · input, sensors, audio, timing</div>
+            <div class="px-4 py-3 text-sm">E6 · frame pacing and presentation</div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE F</p>
+            <p class="text-sm text-[var(--white-icon)]">O Sir playable profile</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">F1 · Boot to title/menu</div>
+            <div class="px-4 py-3 text-sm">F2 · Render stable frames</div>
+            <div class="px-4 py-3 text-sm">F3 · Touch/controller input</div>
+            <div class="px-4 py-3 text-sm">F4 · Asset/filesystem compatibility</div>
+            <div class="px-4 py-3 text-sm">F5 · Audio</div>
+            <div class="px-4 py-3 text-sm">F6 · Save data and lifecycle</div>
+            <div class="px-4 py-3 text-sm">F7 · Remove/contain current hard-coded patches</div>
+          </div>
+        </section>
+
+        <section class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+          <div class="flex flex-col gap-1 border-b border-[var(--line)] px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs tracking-[.16em] text-[var(--sec)]">PHASE G</p>
+            <p class="text-sm text-[var(--white-icon)]">Gameloft expansion</p>
+          </div>
+          <div class="divide-y divide-[var(--line)]">
+            <div class="px-4 py-3 text-sm">G1 · APK/OBB intake manifest</div>
+            <div class="px-4 py-3 text-sm">G2 · shared Gameloft ABI profile</div>
+            <div class="px-4 py-3 text-sm">G3 · The Dark Knight Rises</div>
+            <div class="px-4 py-3 text-sm">G4 · The Amazing Spider-Man</div>
+            <div class="px-4 py-3 text-sm">G5 · versioned compatibility profiles</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- PROJECT32DROID_ROADMAP_START -->
+    </div>
+  ) : (
+<p class="mt-2 text-lg text-[var(--white)]">
+              {doc.milestone}
+            </p>
+  )
+}
+
+          </div>
+        )
+      }
+    </section>
+  </main>
+</Layout>

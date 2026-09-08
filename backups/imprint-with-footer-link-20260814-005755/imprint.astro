@@ -1,0 +1,106 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+const business = {
+  owner: "Buddy Al Bittar",
+  designation: "Acsaeo",
+  street: "Eschersheimer Landstraße 572",
+  city: "60433, Frankfurt am Main",
+  email: "bitsurah@gmail.com",
+  phone: "015754162685",
+};
+---
+
+<Layout title="Impressum">
+  <main class="mx-auto min-h-screen max-w-5xl py-28">
+    <a
+      href="/portfolio/"
+      class="inline-flex items-center gap-2 text-sm text-[var(--sec)] transition hover:text-[var(--white)]"
+    >
+      ← Zurück zum Portfolio
+    </a>
+
+    <section class="mt-12 overflow-hidden rounded-3xl border border-[var(--line)] bg-black">
+      <div class="border-b border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,138,24,.13),transparent_48%)] p-7 md:p-12">
+        <p class="text-xs tracking-[.22em] text-[var(--sec)]">
+          LEGAL / DE
+        </p>
+
+        <div class="mt-5 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h1 class="text-5xl font-medium leading-none md:text-7xl">
+              Impressum
+            </h1>
+
+            <p class="mt-5 max-w-2xl text-lg text-[var(--white-icon)]">
+              Anbieterkennzeichnung gemäß § 5 Digitale-Dienste-Gesetz (DDG).
+            </p>
+          </div>
+
+          <p class="text-sm text-[var(--white-icon)]">
+            Stand: August 2026
+          </p>
+        </div>
+      </div>
+
+      <div class="grid gap-px bg-[var(--line)] md:grid-cols-2">
+        <article class="bg-black p-7 md:p-10">
+          <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+            DIENSTEANBIETER
+          </p>
+
+          <h2 class="mt-4 text-2xl">Angaben gemäß § 5 DDG</h2>
+
+          <div class="mt-6 space-y-1 leading-relaxed text-[var(--white-icon)]">
+            <p class="text-[var(--white)]">{business.owner}</p>
+            <p>{business.designation}</p>
+            <p>{business.street}</p>
+            <p>{business.city}</p>
+            <p>Deutschland</p>
+          </div>
+        </article>
+
+        <article class="bg-black p-7 md:p-10">
+          <p class="text-xs tracking-[.18em] text-[var(--sec)]">
+            KONTAKT
+          </p>
+
+          <h2 class="mt-4 text-2xl">Direkte Erreichbarkeit</h2>
+
+          <div class="mt-6 space-y-5">
+            <div>
+              <p class="text-xs tracking-[.14em] text-[var(--white-icon)]">
+                E-MAIL
+              </p>
+
+              <a
+                href={`mailto:${business.email}`}
+                class="mt-1 inline-flex break-all text-[var(--sec)] underline decoration-[var(--sec)]/50 underline-offset-4 transition hover:text-[var(--white)]"
+              >
+                {business.email}
+              </a>
+            </div>
+
+            <div>
+              <p class="text-xs tracking-[.14em] text-[var(--white-icon)]">
+                TELEFON
+              </p>
+
+              <a
+                href={`tel:${business.phone.replace(/\s/g, "")}`}
+                class="mt-1 inline-flex text-[var(--sec)] underline decoration-[var(--sec)]/50 underline-offset-4 transition hover:text-[var(--white)]"
+              >
+                {business.phone}
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <p class="mt-8 max-w-3xl text-sm leading-relaxed text-[var(--white-icon)]">
+      Diese Anbieterkennzeichnung gilt für das Portfolio unter
+      ax-server.tailcf3361.ts.net/portfolio/.
+    </p>
+  </main>
+</Layout>

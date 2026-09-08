@@ -1,0 +1,60 @@
+{
+  "name": "Axio - Sync Public GitHub Projects",
+  "nodes": [
+    {
+      "parameters": { "rule": { "interval": [ { "field": "hours", "hoursInterval": 6 } ] } },
+      "id": "e203f522-15b0-4c65-b5bc-94d50807cfa0",
+      "name": "Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/users/Acsaeo/repos?type=owner&sort=updated&direction=desc&per_page=100",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/vnd.github+json" },
+            { "name": "X-GitHub-Api-Version", "value": "2022-11-28" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e73ea79a-f2d7-4ac9-9811-b0da1c2d04b8",
+      "name": "Get Acsaeo Public Repositories",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const repos = $input.all().map(item => item.json);\nconst projects = repos\n  .filter(repo => repo.visibility === 'public' && !repo.fork && !repo.archived && !repo.disabled)\n  .map(repo => ({\n    name: repo.name,\n    fullName: repo.full_name,\n    url: repo.html_url,\n    description: repo.description || 'Public project by Axiolus.',\n    language: repo.language || null,\n    topics: Array.isArray(repo.topics) ? repo.topics.slice(0, 8) : [],\n    stars: Number(repo.stargazers_count || 0),\n    forks: Number(repo.forks_count || 0),\n    updatedAt: repo.updated_at,\n    pushedAt: repo.pushed_at,\n    homepage: repo.homepage || null\n  }));\nreturn [{ json: { payloadB64: Buffer.from(JSON.stringify({ projects })).toString('base64url'), count: projects.length } }];"
+      },
+      "id": "453d1e70-a56d-46cb-9c0a-bd8f0905440b",
+      "name": "Filter and Prepare Public Projects",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [760, 300]
+    },
+    {
+      "parameters": { "command": "node /files/github-project-sync.cjs \"{{$json.payloadB64}}\"" },
+      "id": "c9ce9c40-d55b-4be7-b4dd-d339d7e17ce5",
+      "name": "Write Public Project Feed",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 6 Hours": { "main": [[{ "node": "Get Acsaeo Public Repositories", "type": "main", "index": 0 }]] },
+    "Get Acsaeo Public Repositories": { "main": [[{ "node": "Filter and Prepare Public Projects", "type": "main", "index": 0 }]] },
+    "Filter and Prepare Public Projects": { "main": [[{ "node": "Write Public Project Feed", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "567a96a0-132b-467f-9e0b-e5f68eb92e81",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}

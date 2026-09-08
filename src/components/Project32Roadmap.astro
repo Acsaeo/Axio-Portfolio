@@ -1,0 +1,238 @@
+---
+import {
+  project32CompletedCount,
+  project32Phases,
+  project32Progress,
+  project32TotalCount,
+  type Project32Status,
+} from "@/data/project32Roadmap";
+
+function statusClass(status: Project32Status) {
+  return {
+    "border-[var(--sec)] bg-[var(--sec)] text-black": status === "COMPLETE",
+    "border-[var(--sec)] text-[var(--sec)]": status === "ACTIVE",
+    "border-[var(--coral)] text-[var(--coral)]": status === "BLOCKED",
+    "border-[var(--line)] text-[var(--white-icon)]":
+      status === "PENDING" || status === "NOT STARTED",
+  };
+}
+
+function phaseBorder(status: Project32Status) {
+  return {
+    "border-[var(--sec)]": status === "COMPLETE" || status === "ACTIVE",
+    "border-[var(--coral)]": status === "BLOCKED",
+    "border-[var(--line)]":
+      status === "PENDING" || status === "NOT STARTED",
+  };
+}
+---
+
+<section class="mt-6 space-y-6" data-project32-roadmap>
+  <div class="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#050505]">
+    <div class="border-b border-[var(--line)] bg-[linear-gradient(120deg,rgba(255,138,24,.16),transparent_55%)] px-5 py-5">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="text-xs tracking-[.2em] text-[var(--sec)]">
+            PROJECT32DROID ROADMAP
+          </p>
+
+          <h2 class="mt-2 text-2xl text-[var(--white)] md:text-3xl">
+            Rootless ARM32 runtime
+          </h2>
+
+          <p class="mt-2 text-sm text-[var(--white-icon)]">
+            armeabi-v7a guest runtime on arm64-v8a Android
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="rounded-full border border-[var(--sec)] bg-[var(--sec)] px-3 py-1 text-black">
+            {project32CompletedCount} COMPLETE
+          </span>
+
+          <span class="rounded-full border border-[var(--sec)] px-3 py-1 text-[var(--sec)]">
+            {project32Progress}% ROADMAP
+          </span>
+
+          <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--coral)]">
+            C3b BLOCKED
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-px bg-[var(--line)] md:grid-cols-3">
+      <div class="bg-black p-5">
+        <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+          CURRENT MILESTONE
+        </p>
+
+        <p class="mt-3 font-mono text-sm text-[var(--white)]">
+          C3b · Inspect target veneer
+        </p>
+
+        <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+          Install and execute the built veneer inspection work after device reconnect.
+        </p>
+      </div>
+
+      <div class="bg-black p-5">
+        <p class="text-xs tracking-[.16em] text-[var(--coral)]">
+          CURRENT BLOCKER
+        </p>
+
+        <p class="mt-3 font-mono text-sm text-[var(--white)]">
+          nativeRecreateGfxState provenance
+        </p>
+
+        <p class="mt-2 text-sm leading-relaxed text-[var(--white-icon)]">
+          Raw-pointer source classification depends on the real C3b veneer words.
+        </p>
+      </div>
+
+      <div class="bg-black p-5">
+        <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+          ROADMAP PROGRESS
+        </p>
+
+        <p class="mt-3 text-3xl text-[var(--white)]">
+          {project32Progress}%
+        </p>
+
+        <p class="mt-2 text-sm text-[var(--white-icon)]">
+          {project32CompletedCount} of {project32TotalCount} milestones COMPLETE
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t border-[var(--line)] bg-black p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--sec)]">
+        VERIFIED FAULT PATH
+      </p>
+
+      <p class="mt-3 break-words font-mono text-xs leading-6 text-[var(--white-icon)] md:text-sm">
+        nativeRecreateGfxState
+        <span class="px-1 text-[var(--sec)]">→</span>
+        raw fetch PC 0x000485bc
+        <span class="px-1 text-[var(--sec)]">→</span>
+        LR 0x4046a704
+        <span class="px-1 text-[var(--sec)]">→</span>
+        BL at 0x4046a700
+        <span class="px-1 text-[var(--coral)]">→</span>
+        target veneer inspection
+      </p>
+    </div>
+
+    <div class="border-t border-[var(--line)] bg-[#ff4d1808] p-5">
+      <p class="text-xs tracking-[.16em] text-[var(--coral)]">
+        CURRENT POLICY
+      </p>
+
+      <div class="mt-3 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+          No UDF patching
+        </span>
+        <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+          No generic import batches
+        </span>
+        <span class="rounded-full border border-[var(--coral)] px-3 py-1 text-[var(--white-icon)]">
+          No host pointers in guest memory
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-4">
+    {
+      project32Phases.map((phase) => (
+        <details
+          open={phase.open}
+          class:list={{
+            "group overflow-hidden rounded-2xl border bg-[#050505]": true,
+            ...phaseBorder(phase.status),
+          }}
+        >
+          <summary class="flex cursor-pointer list-none flex-col gap-3 px-5 py-4 transition hover:bg-[#ffffff08] sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p
+                class:list={{
+                  "text-xs tracking-[.18em]": true,
+                  "text-[var(--sec)]":
+                    phase.status === "COMPLETE" ||
+                    phase.status === "ACTIVE",
+                  "text-[var(--coral)]": phase.status === "BLOCKED",
+                  "text-[var(--white-icon)]":
+                    phase.status === "PENDING" ||
+                    phase.status === "NOT STARTED",
+                }}
+              >
+                {phase.id}
+              </p>
+
+              <p class="mt-1 text-lg text-[var(--white)]">
+                {phase.title}
+              </p>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <span
+                class:list={{
+                  "rounded-full border px-3 py-1 text-xs tracking-[.12em]": true,
+                  ...statusClass(phase.status),
+                }}
+              >
+                {phase.status}
+              </span>
+
+              <span class="text-xs text-[var(--sec)] group-open:hidden">
+                Expand +
+              </span>
+              <span class="hidden text-xs text-[var(--sec)] group-open:inline">
+                Collapse −
+              </span>
+            </div>
+          </summary>
+
+          <div class="divide-y divide-[var(--line)] border-t border-[var(--line)]">
+            {
+              phase.items.map((item) => (
+                <div
+                  class:list={{
+                    "flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-start": true,
+                    "bg-[#ff4d1808]": item.status === "BLOCKED",
+                    "bg-[#ff8a1809]": item.status === "ACTIVE",
+                  }}
+                >
+                  <span class="min-w-0 flex-1">
+                    <span class="font-mono text-sm text-[var(--white)]">
+                      {item.id} · {item.label}
+                    </span>
+
+                    {
+                      item.evidence && (
+                        <span class="mt-1 block text-sm leading-relaxed text-[var(--white-icon)]">
+                          {item.evidence}
+                        </span>
+                      )
+                    }
+                  </span>
+
+                  <span
+                    class:list={{
+                      "w-fit shrink-0 rounded-full border px-3 py-1 text-xs tracking-[.12em]": true,
+                      ...statusClass(item.status),
+                    }}
+                  >
+                    {item.status}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+        </details>
+      ))
+    }
+  </div>
+
+  <!-- PROJECT32DROID_ROADMAP_START -->
+</section>

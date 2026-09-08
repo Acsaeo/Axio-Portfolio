@@ -1,0 +1,11 @@
+---
+const title = 'Axiolus / Ax-Homelab';
+const capabilities = [
+  ['Private AI workspace', 'Conversations, models, tool-assisted workflows, and personal AI experiments.'],
+  ['Voice and presence', 'Speech, wake-word experiments, display ideas, and a phone-first companion direction.'],
+  ['Automation layer', 'Personal workflows, APIs, notifications, and agent-driven project operations.'],
+  ['Personal cloud', 'Self-owned files, media, sync, remote access, and useful services.'],
+  ['Development lab', 'Android, native code, web apps, game tooling, mods, and deployed experiments.']
+];
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="robots" content="noindex, nofollow, noarchive"/><title>{title}</title><style>:root{color-scheme:dark;--bg:#0b0c0e;--panel:#121418;--line:#292e37;--ink:#eef0f3;--muted:#9299a6;--accent:#9ff5c1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}main{width:min(1000px,calc(100% - 32px));margin:auto;padding:48px 0 80px}nav{display:flex;gap:18px;margin-bottom:46px;font-size:.82rem}a{color:var(--accent)}h1{font-size:clamp(2.6rem,8vw,5rem);letter-spacing:-.09em;line-height:.9;margin:0}.intro{max-width:690px;color:var(--muted);margin:22px 0 46px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px}.card:hover{border-color:#667080}h2{font-size:1.05rem;margin:0 0 10px}p{color:var(--muted);margin:0}.signal{margin-top:42px;border-top:1px solid var(--line);padding-top:20px;color:var(--accent);font-size:.82rem}</style></head><body><main><nav><a href={import.meta.env.BASE_URL}>home</a><a href={`${import.meta.env.BASE_URL}projects/`}>projects</a><a href={`${import.meta.env.BASE_URL}homelab/`}>ax-homelab</a></nav><h1>AX<br/>HOMELAB</h1><p class="intro">Axiolus’ personal systems lab: self-owned infrastructure that turns ideas into tools, experiments, and reliable daily services.</p><section class="grid">{capabilities.map(([name,description])=><article class="card"><h2>{name}</h2><p>{description}</p></article>)}</section><p class="signal">● Built, operated, and continuously evolved by Axiolus.</p></main></body></html>

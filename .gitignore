@@ -1,0 +1,8 @@
+.astro/
+node_modules/
+dist/
+.backups/
+.htpasswd
+.env
+*.pem
+*.key
