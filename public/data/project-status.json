@@ -19,8 +19,8 @@
     "title": "Project32Droid",
     "tagline": "A 32-bit Android compatibility and emulation experiment.",
     "status": "active",
-    "progress": 45,
-    "next": "C5 · Apply narrow slot-scoped repair.",
+    "progress": 47,
+    "next": "C4.1 · nativeRecreateGfxState returns through P32_STOP.",
     "tags": [
       "Kotlin",
       "C++",
