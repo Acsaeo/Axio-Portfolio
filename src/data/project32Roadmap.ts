@@ -88,7 +88,7 @@ export const project32Phases: Project32Phase[] = [
   {
     id: "PHASE B",
     title: "Runtime provenance and controlled execution",
-    status: "ACTIVE",
+    status: "COMPLETE",
     open: true,
     items: [
       {
@@ -210,6 +210,13 @@ export const project32Phases: Project32Phase[] = [
         label: "nativeRecreateGfxState returns through P32_STOP",
         status: "PENDING",
         evidence: "Phase C completion criterion",
+      },
+      {
+        id: "C4.2",
+        label: "Direct-run end attribution diagnostic (logging-only)",
+        status: "ACTIVE",
+        evidence:
+          "C6.1 implemented on c4-fetch-veneer-diagnostic (OpenHands commit f71f00f; AndroidBridge.cpp + JniHle.cpp/.h); emits P32TRACE: c6-stop-cause at every direct-run end; awaiting on-device run",
       },
     ],
   },
