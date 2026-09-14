@@ -142,8 +142,9 @@ export const project32Phases: Project32Phase[] = [
       {
         id: "B2.2",
         label: "Constructor prefix beyond index 0",
-        status: "COMPLETE",
-        evidence: "Constructor prefix beyond index 0 executed successfully",
+        status: "PENDING",
+        evidence:
+          "Deferred per portfolio rules — Phase B is complete only through constructor index 0; the constructor prefix beyond index 0 is deferred (tracked under F1.1)",
       },
     ],
   },
@@ -209,14 +210,78 @@ export const project32Phases: Project32Phase[] = [
         id: "C4.1",
         label: "nativeRecreateGfxState returns through P32_STOP",
         status: "PENDING",
-        evidence: "Phase C completion criterion",
+        evidence:
+          "Phase C completion criterion; not met — render frames still end in the guest UDF trap (see C4.8)",
       },
       {
         id: "C4.2",
         label: "Direct-run end attribution diagnostic (logging-only)",
+        status: "COMPLETE",
+        evidence:
+          "OpenHands commit f71f00f (AndroidBridge.cpp + JniHle.cpp/.h); emits P32TRACE: c6-stop-cause at every direct-run end; device-verified in the c6-3a / c6-3b / c6-5 runs",
+      },
+      {
+        id: "C4.3",
+        label: "C6.2 · slot 0x40f51658 classification (no-relocation-record in all libs)",
+        status: "COMPLETE",
+        evidence:
+          "Commit a565a6a; no relocation record in all libs; return-path stack window; sibling to slot 0x40f51b74",
+      },
+      {
+        id: "C4.4",
+        label: "C6.2b · return-path record moved to direct runs (logging-only)",
+        status: "COMPLETE",
+        evidence:
+          "Commit 48a9beb; return-path window: stack[0]=0x4046a704 unconsumed; endLr=0x40f51658",
+      },
+      {
+        id: "C4.5",
+        label: "C6.3A · explicit direct-run termination sentinel",
+        status: "COMPLETE",
+        evidence:
+          "until=0xFFFFFFFC; pc=0 escape becomes a loud type-21 fault at 0x1000 (commit 0d86e52; evidence c6-3a-device-evidence-20260914T144921Z.txt)",
+      },
+      {
+        id: "C4.6",
+        label: "C6.3B-pre · page-0 state, call capture, precondition audit (logging-only)",
+        status: "COMPLETE",
+        evidence:
+          "page 0 mapped RWX zero-filled; no lib exports syscall; call capture r0=0xf1=241 sched_setaffinity pid=1234 len=4 mask=0 (commit 7826ca5; evidence c6-3b-pre-device-evidence-20260914T163253Z.txt)",
+      },
+      {
+        id: "C4.7",
+        label: "C6.3B · narrow syscall() HLE via stub registry",
+        status: "COMPLETE",
+        evidence:
+          "slot 0x40f51b74 -> stub 0xdead00b9; zero 0x1000 faults; unsupported=0 (commit c745d32; c6-3b / c6-5 device evidence)",
+      },
+      {
+        id: "C4.8",
+        label: "C6.4 · classify post-HLE render-frame end state",
+        status: "COMPLETE",
+        evidence:
+          "steady state = guest UDF trap 0xe7ffdefe at 0x4050c2fc after helper 0x4004881c returns 0; P32_STOP address moved to 0xdead01c4 — criterion is name-anchored (evidence c6-3b-device-evidence-20260914T171858Z.txt)",
+      },
+      {
+        id: "C4.9",
+        label: "C6.5 · UDF trap attribution windows (logging-only)",
+        status: "COMPLETE",
+        evidence:
+          "trap is compiler UNREACHABLE after the noreturn-helper-returns pattern; udf-attr-sets=1, rawcall=2 (commit 10e2f50; evidence c6-5-device-evidence-20260914T182114Z.txt)",
+      },
+      {
+        id: "C4.10",
+        label: "C6.x-2 · decode trap-site helper 0x4004881c",
+        status: "COMPLETE",
+        evidence:
+          "helper invisible below hook band 0x40200000; returns normally r0=0; raw 0x485bc = unrebased self (not a pointer to its siblings); trap NOPing rejected — next word is another function's prologue",
+      },
+      {
+        id: "C4.11",
+        label: "C6.x-3 · widen code-hook band to trace helper 0x4004881c",
         status: "ACTIVE",
         evidence:
-          "C6.1 implemented on c4-fetch-veneer-diagnostic (OpenHands commit f71f00f; AndroidBridge.cpp + JniHle.cpp/.h); emits P32TRACE: c6-stop-cause at every direct-run end; awaiting on-device run",
+          "OpenHands commit 4b3d0bb: m_hookCodeUnity begin 0x40200000 -> 0x40000000 (full rebased libunity code range); awaiting the next device run",
       },
     ],
   },

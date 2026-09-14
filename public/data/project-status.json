@@ -19,8 +19,8 @@
     "title": "Project32Droid",
     "tagline": "A 32-bit Android compatibility and emulation experiment.",
     "status": "active",
-    "progress": 46,
-    "next": "C4.2 · Direct-run end attribution diagnostic (logging-only).",
+    "progress": 52,
+    "next": "C4.11 (C6.x-3) · Widen code-hook band to trace helper 0x4004881c.",
     "tags": [
       "Kotlin",
       "C++",
