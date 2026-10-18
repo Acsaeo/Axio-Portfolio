@@ -2,7 +2,7 @@
 const year = new Date().getFullYear();
 ---
 
-<footer class="ax-footer py-12 text-center text-sm text-[var(--white-icon)]">
+<footer class="ax-footer">
   <div class="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
     <span>Built and operated by Axiolus · © {year}</span>
 
@@ -20,7 +20,9 @@ const year = new Date().getFullYear();
     </a>
   </div>
 </footer>
-<style>.ax-footer{position:relative;padding-top:5rem}
+<style>/* short centered glowing separator */
+.ax-footer{position:relative;padding-top:5rem}
 .ax-footer::before{content:"";position:absolute;top:1.5rem;left:50%;transform:translateX(-50%);
 height:3px;width:160px;border-radius:9999px;
-background:linear-gradient(90deg,transparent,var(--line) 35%,var(--line) 65%,transparent);opacity:.8}</style>
+background:linear-gradient(90deg,transparent,#ff8a18 35%,#ff8a18 65%,transparent);
+box-shadow:0 0 14px rgba(255,138,24,.35);opacity:.85}</style>
